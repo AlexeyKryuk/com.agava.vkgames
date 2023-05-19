@@ -3,6 +3,7 @@ const library = {
         bridge: undefined,
 
         isInitialized: false,
+        isPlayerAGroupMember: false,
 
         vkWebAppInit: function (onInitializedCallback, onErrorCallback, isTest) {
 
@@ -125,6 +126,20 @@ const library = {
                 });
         },
 
+        vkWebCheckPlayerOnGroupMembership: function () {
+            function invokeSuccess() {
+                isPlayerAGroupMember = (data.is_member == 1);
+            }
+            
+            vkSDK.bridge.send("VKWebAppGetGroupInfo", { "group_id": 84861196 })
+                .then(function (data) {
+                    invokeSuccess();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         vkWebAppOpenPayForm: function (itemName, onSuccessCallback, onErrorCallback) {
             vkSDK.bridge.send('VKWebAppShowOrderBox', {
                 type: 'item',
@@ -170,24 +185,21 @@ const library = {
                                     })
                                         .then((data) => {
                                             if (data.response) {
-                                                console.log("Миссия выполнена");
+                                                console.log("Mission completed");
                                             }
                                         })
                                         .catch((error) => {
-                                            // Ошибка
                                             console.log(error);
                                         });
                                     
                                 }
                             })
                             .catch((error) => {
-                                // Ошибка
                                 console.log(error);
                             });
                     }
                 })
                 .catch((error) => {
-                    // Ошибка
                     console.log(error);
                 });
 
@@ -233,6 +245,10 @@ const library = {
 
     IsInitialized: function () {
         return vkSDK.isInitialized;
+    },
+
+    ISPlayerAGroupMember: function () {
+        return vkSDK.isPlayerAGroupMember;
     },
 
     VKWebAppOpenPayForm: function (itemName, onSuccessCallback, onErrorCallback) {

@@ -11,6 +11,8 @@ namespace Agava.VKGames
         private static extern void WebAppInit(Action onSuccessCallback, Action onErrorCallback, bool isTest);
         [DllImport("__Internal")]
         private static extern bool IsInitialized();
+        [DllImport("__Internal")]
+        private static extern bool ISPlayerAGroupMember();
 
         public static bool Initialized => IsInitialized();
 
