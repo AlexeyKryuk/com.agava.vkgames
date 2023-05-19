@@ -16,7 +16,7 @@ namespace Agava.VKGames
 
         public static bool Initialized => IsInitialized();
 
-        public static bool IsPlayerAGroupMember => IsPlayerAGroupMember();
+        public static bool PlayerIsAGroupMember => IsPlayerAGroupMember();
 
         private static Action s_onSuccessCallback;
         private static Action s_onErrorCallback;
