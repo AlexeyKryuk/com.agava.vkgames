@@ -12,9 +12,11 @@ namespace Agava.VKGames
         [DllImport("__Internal")]
         private static extern bool IsInitialized();
         [DllImport("__Internal")]
-        private static extern bool ISPlayerAGroupMember();
+        private static extern bool IsPlayerAGroupMember();
 
         public static bool Initialized => IsInitialized();
+
+        public static bool IsPlayerAGroupMember => IsPlayerAGroupMember();
 
         private static Action s_onSuccessCallback;
         private static Action s_onErrorCallback;

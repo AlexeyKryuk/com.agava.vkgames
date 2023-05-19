@@ -15,6 +15,7 @@ const library = {
                 function invokeSuccess() {
                     vkSDK.isInitialized = true;
                     vkSDK.bridge = window['vkBridge'];
+                    vkSDK.vkWebCheckPlayerOnGroupMembership();
                     dynCall('v', onInitializedCallback);
                 }
 
@@ -247,7 +248,7 @@ const library = {
         return vkSDK.isInitialized;
     },
 
-    ISPlayerAGroupMember: function () {
+    IsPlayerAGroupMember: function () {
         return vkSDK.isPlayerAGroupMember;
     },
 
