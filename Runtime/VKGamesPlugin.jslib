@@ -158,13 +158,13 @@ const library = {
         },
 
         vkWebCompleteMission: function (id_app, activity_id, activity_value) {
-            bridge.send('VKWebAppGetAuthToken', {
+            vkSDK.bridge.send('VKWebAppGetAuthToken', {
                 app_id: id_app,
                 scope: ''
             })
                 .then((data) => {
                     if (data.access_token) {
-                        bridge.send('VKWebAppCallAPIMethod', {
+                        vkSDK.bridge.send('VKWebAppCallAPIMethod', {
                             method: 'users.get',
                             params: {
                                 access_token: data.access_token,
@@ -173,7 +173,7 @@ const library = {
                         })
                             .then((data) => {
                                 if (data.response) {
-                                    bridge.send('VKWebAppCallAPIMethod', {
+                                    vkSDK.bridge.send('VKWebAppCallAPIMethod', {
                                         method: 'secure.addAppEvent',
                                         params: {
                                             access_token: data.access_token,
