@@ -180,7 +180,6 @@ const library = {
                                             user_ids: data.response[0].id,
                                             activity_id: activity_id,
                                             value: activity_value,
-                                            access_token: data.access_token,
                                             v: '5.131',
                                         }
                                     })
