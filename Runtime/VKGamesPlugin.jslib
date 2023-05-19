@@ -132,7 +132,59 @@ const library = {
                     console.log(error);
                     dynCall('v', onErrorCallback);
                 });
-        }
+        },
+
+        vkWebCompleteMission: function (id_app, activity_id, activity_value) {
+            bridge.send('VKWebAppGetAuthToken', {
+                app_id: id_app,
+                scope: ''
+            })
+                .then((data) => {
+                    if (data.access_token) {
+                        bridge.send('VKWebAppCallAPIMethod', {
+                            method: 'users.get',
+                            params: {
+                                access_token: data.access_token,
+                                v: '5.131',
+                            }
+                        })
+                            .then((data) => {
+                                if (data.response) {
+                                    bridge.send('VKWebAppCallAPIMethod', {
+                                        method: 'secure.addAppEvent',
+                                        params: {
+                                            access_token: data.access_token,
+                                            user_ids: data.response[0].id,
+                                            activity_id: activity_id,
+                                            value: activity_value,
+                                            access_token: data.access_token,
+                                            v: '5.131',
+                                        }
+                                    })
+                                        .then((data) => {
+                                            if (data.response) {
+                                                console.log("Миссия выполнена");
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            // Ошибка
+                                            console.log(error);
+                                        });
+                                    
+                                }
+                            })
+                            .catch((error) => {
+                                // Ошибка
+                                console.log(error);
+                            });
+                    }
+                })
+                .catch((error) => {
+                    // Ошибка
+                    console.log(error);
+                });
+
+        },
     },
 
     // C# calls
@@ -180,6 +232,12 @@ const library = {
         vkSDK.throwIfSdkNotInitialized();
 
         vkSDK.vkWebAppOpenPayForm(itemName, onSuccessCallback, onErrorCallback);
+    },
+
+    VKWebCompleteMission: function (id_app, activity_id, activity_value = 0) {
+        vkSDK.throwIfSdkNotInitialized();
+
+        vkSDK.vkWebCompleteMission(id_app, activity_id, activity_value);
     }
 }
 
